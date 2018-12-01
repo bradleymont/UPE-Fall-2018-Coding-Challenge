@@ -26,7 +26,6 @@ def makeMove(dir):
 	r = requests.post(url = gameUrl, data = data, headers = headers)
 	return json.loads(r.text)["result"]
 
-
 def inBounds(x, y, width, height):
 	return (x >= 0) and (x < width) and (y >= 0) and (y < height)
 
@@ -50,10 +49,8 @@ def solveMaze(x, y, discovered, width, height):
 		if (moveResult == "SUCCESS"):
 			if (solveMaze(x, y - 1, discovered, width, height) == True):
 				return True
-
 			else:
 				makeMove("DOWN")
-
 
 	#check down
 	if (inBounds(x, y + 1, width, height) and discovered[x][y + 1] == UNDISCOVERED):
@@ -70,7 +67,6 @@ def solveMaze(x, y, discovered, width, height):
 				return True
 			else:
 				makeMove("UP")
-
 
 	#check left
 	if (inBounds(x - 1, y, width, height) and discovered[x - 1][y] == UNDISCOVERED):
@@ -106,17 +102,20 @@ def solveMaze(x, y, discovered, width, height):
 
 	return False
 
-
 #get initial mazeStatus
 gameUrl = baseUrl + "game?token=" + token
 gameState = requests.get(gameUrl, headers=headers)
 gameStatus = json.loads(gameState.text)['status']
 
-mazeNumber = 1;
-while (gameStatus != "FINISHED"):
-	print("Starting maze #" + str(mazeNumber))
-
+mazeNumber = 1
+numMazes = 5
+while (mazeNumber <= numMazes):
 	gameState = requests.get(gameUrl, headers=headers)
+
+	if (gameStatus == "FINISHED"):
+		break
+		
+	print("Starting maze #" + str(mazeNumber))
 
 	(width, height) = mazeSize(gameState)
 	(startX, startY) = startLocation(gameState)
@@ -124,6 +123,8 @@ while (gameStatus != "FINISHED"):
 
 	if (solveMaze(startX, startY, discovered, width, height)):
 		print("Finished maze #"  + str(mazeNumber))
+		if (mazeNumber == 5):
+			print("All mazes completed.")
 
 	gameStatus = json.loads(gameState.text)['status']
 
@@ -132,6 +133,6 @@ while (gameStatus != "FINISHED"):
 		break
 
 	mazeNumber += 1
-	
+
 if (gameStatus == "FINISHED"):
-	print("All mazes completed.")
+	print("Game status is now: FINISHED")
