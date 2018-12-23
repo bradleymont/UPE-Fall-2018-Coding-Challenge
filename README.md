@@ -9,5 +9,5 @@ The spec for the coding challenge can be found [here.](https://gist.github.com/a
 
 1. Clone this repository onto your local machine.
 2. Make sure you have python3 downloaded.
-3. Install the following python modules: requests and json: $pip3 install requests json
-4. Run the program: $python3 maze.py
+3. Install the following python modules: requests and json: `pip3 install requests json`
+4. Run the program: `python3 maze.py`
