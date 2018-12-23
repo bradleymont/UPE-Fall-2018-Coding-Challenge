@@ -9,5 +9,5 @@ The spec for the coding challenge can be found [here](https://gist.github.com/au
 
 1. Clone this repository onto your local machine.
 2. Make sure you have python3 installed.
-3. Install the requests and json python modules: `pip3 install requests json`
+3. Install the requests and json python modules: `pip3 install requests simplejson`
 4. Run the program: `python3 maze.py`
